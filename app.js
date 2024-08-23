@@ -6,11 +6,20 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json());
-app.use(cors());
-// app.use(express.bodyParser({limit: '50mb'}));
+app.use(cors(
+  {
+    origin: ["https://ch-animal-program.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true
+  }
+));
+
+app.get("/", (req, res) => {
+  res.json("Hello")
+})
 
 mongoose.connect(process.env.MONGO_DB)
   .then(() => console.log('Database connected'))
